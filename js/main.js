@@ -1,0 +1,168 @@
+const projectGrid = document.getElementById("project-grid");
+const skillsGrid = document.getElementById("skills-grid");
+const modal = document.getElementById("project-modal");
+const modalContent = document.getElementById("modal-content");
+const yearEl = document.getElementById("year");
+const navToggle = document.querySelector(".nav-toggle");
+const navLinks = document.querySelector(".nav-links");
+
+yearEl.textContent = new Date().getFullYear();
+
+function renderDiagram(rows) {
+  return rows
+    .map(
+      (row) => `
+      <div class="diagram-row">
+        ${row
+          .map((item) =>
+            item === "→"
+              ? `<span class="diagram-arrow">→</span>`
+              : `<span class="diagram-node">${item}</span>`
+          )
+          .join("")}
+      </div>`
+    )
+    .join("");
+}
+
+function renderProjects() {
+  projectGrid.innerHTML = PROJECTS.map((project) => {
+    const diagram = renderDiagram(project.diagram);
+    const cardClass = project.featured ? "project-card featured reveal" : "project-card reveal";
+
+    if (project.featured) {
+      return `
+        <button class="${cardClass}" data-project="${project.id}" type="button">
+          <div>
+            <div class="project-meta">
+              ${project.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
+            </div>
+            <h3>${project.title}</h3>
+            <p>${project.summary}</p>
+            <div class="project-impact">↗ ${project.impact}</div>
+          </div>
+          <div class="project-diagram">${diagram}</div>
+        </button>
+      `;
+    }
+
+    return `
+      <button class="${cardClass}" data-project="${project.id}" type="button">
+        <div class="project-meta">
+          ${project.tags.slice(0, 4).map((tag) => `<span class="tag">${tag}</span>`).join("")}
+        </div>
+        <h3>${project.title}</h3>
+        <p>${project.summary}</p>
+        <div class="project-diagram">${diagram}</div>
+        <div class="project-impact">↗ ${project.impact}</div>
+      </button>
+    `;
+  }).join("");
+}
+
+function renderSkills() {
+  skillsGrid.innerHTML = SKILLS.map(
+    (group) => `
+      <article class="skill-group reveal">
+        <h3>${group.title}</h3>
+        <ul>
+          ${group.items.map((item) => `<li>${item}</li>`).join("")}
+        </ul>
+      </article>
+    `
+  ).join("");
+}
+
+function openProjectModal(projectId) {
+  const project = PROJECTS.find((item) => item.id === projectId);
+  if (!project) return;
+
+  modalContent.innerHTML = `
+    <p class="modal-company">${project.company}</p>
+    <h3 id="modal-title">${project.title}</h3>
+    <div class="project-meta">
+      ${project.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
+    </div>
+
+    <div class="modal-section">
+      <h4>Problem</h4>
+      <p>${project.problem}</p>
+    </div>
+
+    <div class="modal-section">
+      <h4>What I built</h4>
+      <ul>
+        ${project.solution.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </div>
+
+    <div class="modal-section">
+      <h4>My role</h4>
+      <p>${project.role}</p>
+    </div>
+
+    <div class="modal-impact"><strong>Impact:</strong> ${project.impact}</div>
+  `;
+
+  modal.showModal();
+  document.body.classList.add("modal-open");
+}
+
+function closeProjectModal() {
+  modal.close();
+  document.body.classList.remove("modal-open");
+}
+
+function setupRevealAnimations() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+}
+
+renderProjects();
+renderSkills();
+setupRevealAnimations();
+
+projectGrid.addEventListener("click", (event) => {
+  const card = event.target.closest("[data-project]");
+  if (!card) return;
+  openProjectModal(card.dataset.project);
+});
+
+modal.querySelector(".modal-close").addEventListener("click", closeProjectModal);
+modal.addEventListener("click", (event) => {
+  const rect = modal.querySelector(".modal-inner").getBoundingClientRect();
+  const clickedOutside =
+    event.clientX < rect.left ||
+    event.clientX > rect.right ||
+    event.clientY < rect.top ||
+    event.clientY > rect.bottom;
+
+  if (clickedOutside) closeProjectModal();
+});
+
+modal.addEventListener("close", () => {
+  document.body.classList.remove("modal-open");
+});
+
+navToggle.addEventListener("click", () => {
+  const isOpen = navLinks.classList.toggle("open");
+  navToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+navLinks.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  });
+});
