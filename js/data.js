@@ -119,6 +119,89 @@ const PROJECTS = [
   },
 ];
 
+const EXPERIENCE = [
+  {
+    company: "Revent Labs",
+    role: "DevOps Lead / MLOps",
+    period: "Jun 2025 – Present",
+    location: "Indore, India",
+    highlights: [
+      "Lead a team of 4–6 engineers on AI platform and multi-cloud operations",
+      "Own LiteLLM/Phoenix production infra, ECS migrations, and secure CI/CD",
+      "Drive P0/P1 incident response, RCA, and platform hardening",
+    ],
+  },
+  {
+    company: "Flutterwave",
+    role: "DevOps Engineer II",
+    period: "Nov 2023 – Jun 2025",
+    location: "Gwalior, India",
+    highlights: [
+      "Operated Amazon EKS for Send Money with 99.9%+ uptime",
+      "Automated infra with Terraform and GitLab CI/CD",
+      "Supported AWS to Azure migration and observability stack rollout",
+    ],
+  },
+  {
+    company: "Legit Bytes",
+    role: "DevOps Engineer",
+    period: "Jan 2022 – Oct 2023",
+    location: "Remote",
+    highlights: [
+      "Built Jenkins CI/CD and Kubernetes deployment pipelines",
+      "Automated configuration with Ansible and Python/Bash scripting",
+      "Managed AWS infrastructure for HA and security",
+    ],
+  },
+];
+
+const CERTIFICATIONS = [
+  {
+    name: "RHCSA",
+    fullName: "Red Hat Certified System Administrator",
+    issuer: "Red Hat",
+    status: "Active",
+    year: "Certified",
+  },
+  {
+    name: "CKA",
+    fullName: "Certified Kubernetes Administrator",
+    issuer: "CNCF / Linux Foundation",
+    status: "In progress",
+    year: "Target 2026",
+  },
+  {
+    name: "AWS SAA",
+    fullName: "AWS Solutions Architect Associate",
+    issuer: "Amazon Web Services",
+    status: "Planned",
+    year: "Target 2026",
+  },
+];
+
+const HOW_I_WORK = [
+  {
+    title: "IaC-first operations",
+    description:
+      "Production changes go through Terraform, pipelines, and review — not manual console clicks.",
+  },
+  {
+    title: "Security in the pipeline",
+    description:
+      "SonarQube, Semgrep, and Trivy gates block risky releases before they reach production.",
+  },
+  {
+    title: "Reliability with ownership",
+    description:
+      "On-call, incident response, RCA, and runbooks — with measurable uptime and MTTR targets.",
+  },
+  {
+    title: "Enable engineering teams",
+    description:
+      "Self-service automation (repos, CI templates, standards) so developers ship faster safely.",
+  },
+];
+
 const SKILLS = [
   {
     title: "Cloud & Platforms",

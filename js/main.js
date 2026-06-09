@@ -1,4 +1,7 @@
 const projectGrid = document.getElementById("project-grid");
+const howGrid = document.getElementById("how-grid");
+const experienceTimeline = document.getElementById("experience-timeline");
+const certsGrid = document.getElementById("certs-grid");
 const skillsGrid = document.getElementById("skills-grid");
 const modal = document.getElementById("project-modal");
 const modalContent = document.getElementById("modal-content");
@@ -58,6 +61,64 @@ function renderProjects() {
       </button>
     `;
   }).join("");
+}
+
+function renderHowIWork() {
+  howGrid.innerHTML = HOW_I_WORK.map(
+    (item) => `
+      <article class="how-card reveal">
+        <h3>${item.title}</h3>
+        <p>${item.description}</p>
+      </article>
+    `
+  ).join("");
+}
+
+function renderExperience() {
+  experienceTimeline.innerHTML = EXPERIENCE.map(
+    (job) => `
+      <article class="timeline-item reveal">
+        <div class="timeline-marker" aria-hidden="true"></div>
+        <div class="timeline-content">
+          <div class="timeline-header">
+            <div>
+              <h3>${job.role}</h3>
+              <p class="timeline-company">${job.company}</p>
+            </div>
+            <div class="timeline-meta">
+              <span>${job.period}</span>
+              <span>${job.location}</span>
+            </div>
+          </div>
+          <ul>
+            ${job.highlights.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        </div>
+      </article>
+    `
+  ).join("");
+}
+
+function certStatusClass(status) {
+  if (status === "Active") return "cert-active";
+  if (status === "In progress") return "cert-progress";
+  return "cert-planned";
+}
+
+function renderCertifications() {
+  certsGrid.innerHTML = CERTIFICATIONS.map(
+    (cert) => `
+      <article class="cert-card reveal">
+        <div class="cert-badge">${cert.name}</div>
+        <h3>${cert.fullName}</h3>
+        <p class="cert-issuer">${cert.issuer}</p>
+        <div class="cert-footer">
+          <span class="cert-status ${certStatusClass(cert.status)}">${cert.status}</span>
+          <span class="cert-year">${cert.year}</span>
+        </div>
+      </article>
+    `
+  ).join("");
 }
 
 function renderSkills() {
@@ -130,6 +191,9 @@ function setupRevealAnimations() {
 }
 
 renderProjects();
+renderHowIWork();
+renderExperience();
+renderCertifications();
 renderSkills();
 setupRevealAnimations();
 
