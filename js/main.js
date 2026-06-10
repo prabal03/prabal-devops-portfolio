@@ -11,6 +11,47 @@ const navLinks = document.querySelector(".nav-links");
 
 yearEl.textContent = new Date().getFullYear();
 
+function setupProfilePhoto() {
+  const photo = document.getElementById("profile-photo");
+  const fallback = document.getElementById("profile-fallback");
+  if (!photo || !fallback) return;
+
+  const showFallback = () => {
+    photo.hidden = true;
+    fallback.hidden = false;
+  };
+
+  const showPhoto = () => {
+    photo.hidden = false;
+    fallback.hidden = true;
+  };
+
+  photo.addEventListener("error", showFallback);
+  photo.addEventListener("load", () => {
+    if (photo.naturalWidth > 0) showPhoto();
+  });
+
+  if (photo.complete) {
+    photo.naturalWidth > 0 ? showPhoto() : showFallback();
+  } else {
+    showFallback();
+  }
+
+  document.querySelectorAll(".about-photo").forEach((img) => {
+    img.addEventListener("error", () => {
+      img.closest(".about-photo-wrap")?.setAttribute("hidden", "");
+    });
+    img.addEventListener("load", () => {
+      if (img.naturalWidth > 0) {
+        img.closest(".about-photo-wrap")?.removeAttribute("hidden");
+      }
+    });
+    if (img.complete && img.naturalWidth === 0) {
+      img.closest(".about-photo-wrap")?.setAttribute("hidden", "");
+    }
+  });
+}
+
 function renderDiagram(rows) {
   return rows
     .map(
@@ -189,6 +230,8 @@ function setupRevealAnimations() {
 
   document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 }
+
+setupProfilePhoto();
 
 renderProjects();
 renderHowIWork();

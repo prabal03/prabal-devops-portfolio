@@ -78,13 +78,29 @@
     <main>
       <section class="hero container">
         <div class="hero-content">
-          <div class="status-pill">
-            <span class="status-dot"></span>
-            Platform operational · Open to opportunities
+          <div class="hero-intro">
+            <div class="profile-photo-wrap">
+              <img
+                src="assets/profile.jpg"
+                alt="Prabal Agrawal"
+                class="profile-photo"
+                id="profile-photo"
+                width="148"
+                height="148"
+                loading="eager"
+              />
+              <div class="profile-fallback" id="profile-fallback" hidden>PA</div>
+            </div>
+            <div class="hero-intro-text">
+              <div class="status-pill">
+                <span class="status-dot"></span>
+                Platform operational · Open to opportunities
+              </div>
+              <h1>
+                Hi, I'm <span class="gradient-text">Prabal Agrawal</span>
+              </h1>
+            </div>
           </div>
-          <h1>
-            Hi, I'm <span class="gradient-text">Prabal Agrawal</span>
-          </h1>
           <p class="hero-subtitle">
             DevOps Lead building reliable production systems on
             <strong>Kubernetes</strong>, <strong>AWS</strong>, and
@@ -224,7 +240,18 @@ eks-node-2     Ready    worker
 
       <section class="section section-alt container" id="about">
         <div class="about-grid">
-          <div>
+          <div class="about-main">
+            <div class="about-photo-wrap" hidden>
+              <img
+                src="assets/profile.jpg"
+                alt="Prabal Agrawal"
+                class="about-photo"
+                width="120"
+                height="120"
+                loading="lazy"
+              />
+            </div>
+            <div>
             <p class="eyebrow">About</p>
             <h2>Platform engineer with production ownership</h2>
             <p>
@@ -242,6 +269,7 @@ eks-node-2     Ready    worker
               I care about measurable outcomes: uptime, deployment speed, security
               posture, and making engineering teams faster through automation.
             </p>
+            </div>
           </div>
           <aside class="about-card">
             <h3>Quick facts</h3>
